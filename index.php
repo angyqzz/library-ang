@@ -1,6 +1,31 @@
 ﻿<?php include("templates/header.php"); ?>
 
-<body>
+<?php
+
+$servername = "localhost";
+$username = "book-angelina";
+$password = "0000";
+$dbname = "books";
+
+$conn = new mysqli($servername, $username, $password, $dbname);
+$conn->query("SET CHARACTER SET UTF8, collation_connection=utf8_general_ci");
+$sql = "SELECT `title`, `author`, `description`, `image`, `ISBN`, `groupID` FROM `book` WHERE 1";
+$result = $conn->query($sql);
+
+$book = array();
+if ($result->num_rows > 0) {
+    // output data of each row
+    while($row = $result->fetch_assoc()) {
+        array_push($book, $row);
+    }
+} else {
+    echo "0 results";
+}
+
+$conn->close();
+?>
+
+<body ng-controller="BookShelfController as books">
 
     <nav class="navbar navbar-default navbar-fixed-top" role="navigation">
       <div class="container">
@@ -14,16 +39,16 @@
           <a class="navbar-brand" href="#">Library Project</a>
         </div>
         <div id="navbar" class="collapse navbar-collapse">
-          <ul class="nav navbar-nav">
-            <li class="active"><a href="#"><i class="fa fa-book"></i> Books</a></li>
-            <li><a href="#about">About</a></li>
-            <li><a href="#contact">Contact</a></li>
+          <ul class="nav navbar-nav" ng-init="nav='home'">
+            <li ng-class="{ active:nav==='home' }"><a href ng-click="nav='home'"><i class="fa fa-book"></i> Books</a></li>
+            <li ng-class="{ active:nav==='about' }"><a href ng-click="nav='about'">About</a></li>
           </ul>
         </div><!--/.nav-collapse -->
       </div>
     </nav>
 
-    <div class="container text-centered">
+    <!--book list -->
+    <div class="container text-centered" ng-show="nav==='home'">
         <div class="thumb">
             <h1>I <span><i class="fa fa-heart text-danger"></i></span> my books</h1>
             <img src="http://4.bp.blogspot.com/-6y49yK5JeC4/UqMClFxIfKI/AAAAAAAAIjw/-w605OmfLKE/s1600/IMG_4700.jpg" alt="..." class="img-circle ">
@@ -31,92 +56,26 @@
             <p style="margin-top: 20px;"><a href="#" class="btn btn-success" role="button" data-toggle="modal" data-target="#myModal">Add New Book</a> <a href="#" class="btn btn-primary" role="button">Add New Group</a></p>
         </div>
         <nav>
-            <ul class="pagination">
-                <li><a href="#">All</a></li>
-                <?php foreach (range('A', 'Z') as $alpha) : ?>
-                     <li><a href="#"><?php echo $alpha;?></a></li>
-                <?php endforeach ?>
+            <ul class="pagination" ng-init="tab=0">
+                <li ng-class="{ active:tab===0 }"><a href ng-click="tab = 0">All</a></li>
+                <li ng-class="{ active:tab===1 }"><a href ng-click="tab = 1">Comics</a></li>
+                <li ng-class="{ active:tab===2 }"><a href ng-click="tab = 2">Action</a></li>
+                <li ng-class="{ active:tab===3 }"><a href ng-click="tab = 3">Drama</a></li>
             </ul>
         </nav>
 
-        <div class="row">
-            <div class="col-xs-6 col-sm-3 thumb">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="media" style="margin-bottom: 20px">
-                            <a class="media-left" href="#">
-                                <img src="http://images.hngn.com/data/images/full/27757/batman-vs-superman.png" class="img-circle small-icon">
-                            </a>
-                            <div class="media-body">
-                                <h4 class="media-heading" style=" margin-top: 6px;">Comics</h4>
-                            </div>
-                        </div>
-                        <div class="caption">
-                            <img src="http://images.hngn.com/data/images/full/27757/batman-vs-superman.png" class="img-circle">
-                            <h2>Superman</h2>
-                            <h3><small>James Franco</small></h3>
-                            <p>...</p>
-                            <p><a href="#" class="btn btn-success" role="button">Edit</a> <a href="#" class="btn btn-danger" role="button">Delete</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-6 col-sm-3 thumb">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="media" style="margin-bottom: 20px">
-                            <a class="media-left" href="#">
-                                <img src="http://rappingmanual.com/wp-content/uploads/2014/09/wheelman-action-scene.jpg" class="img-circle small-icon">
-                            </a>
-                            <div class="media-body">
-                                <h4 class="media-heading" style=" margin-top: 6px;">Action</h4>
-                            </div>
-                        </div>
-                        <div class="caption">
-                            <img src="http://civileats.com/wp-content/uploads/2012/03/The-Hunger-Games-640x.jpg" class="img-circle">
-                            <h2>Hunger Games</h2>
-                            <h3><small>Jim Carry</small></h3>
-                            <p>...</p>
-                            <p><a href="#" class="btn btn-success" role="button">Edit</a> <a href="#" class="btn btn-danger" role="button">Delete</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
-
-            <!-- Add the extra clearfix for only the required viewport -->
-            <div class="clearfix visible-xs-block"></div>
-
-            <div class="col-xs-6 col-sm-3">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        Basic panel example
-                    </div>
-                </div>
-            </div>
-            <div class="col-xs-6 col-sm-3 thumb">
-                <div class="panel panel-default">
-                    <div class="panel-body">
-                        <div class="media" style="margin-bottom: 20px">
-                            <a class="media-left" href="#">
-                                <img src="http://images.hngn.com/data/images/full/27757/batman-vs-superman.png" class="img-circle small-icon">
-                            </a>
-                            <div class="media-body">
-                                <h4 class="media-heading" style=" margin-top: 6px;">Comics</h4>
-                            </div>
-                        </div>
-                        <div class="caption">
-                            <img src="http://media.dcentertainment.com/sites/default/files/GalleryTalent_1900x900_JimLee_HUSH_5334836c1d56a3.73192162.jpg" class="img-circle">
-                            <h2>Hush</h2>
-                            <h3><small>Someone Great</small></h3>
-                            <p>...</p>
-                            <p><a href="#" class="btn btn-success" role="button">Edit</a> <a href="#" class="btn btn-danger" role="button">Delete</a></p>
-                        </div>
-                    </div>
-                </div>
-            </div>
+        <div class="book-view">
+            <span class="badge" ng-click="view='grid'"><i class="fa fa-th"></i></span><span class="badge" ng-click="view='list'"><i class="fa fa-th-list"></i></span>
         </div>
 
-    </div><!-- /.container -->
+        <?php include("templates/books-list.php");  ?>
+    </div><!-- book-list -->
+
+
+    <div class="container text-centered" ng-show="nav==='about'">
+        <?php include("templates/about.php");  ?>
+    </div>
+
     <!-- Modal -->
     <div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
         <div class="modal-dialog">
@@ -163,5 +122,10 @@
     <script src="//code.jquery.com/jquery-1.11.0.min.js"></script>
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
   <script src="angular.min.js"></script>
+    <script>
+        var muutuja = <?=json_encode($book)?>;
+        console.log(muutuja);
+    </script>
+<script src="test.js"></script>
 </body>
 </html>

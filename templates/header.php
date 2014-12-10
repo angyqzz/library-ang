@@ -1,6 +1,7 @@
+
 <!doctype html>
 
-<html lang="en">
+<html lang="en" ng-app="shelf">
 <head>
     <meta charset="utf-8">
 
