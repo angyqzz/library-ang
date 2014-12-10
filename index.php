@@ -99,8 +99,9 @@ $conn->close();
                             <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
                         </div>
                         <div class="form-group">
+                            <img ng-src="{{image}}" alt="" style="width: 90px"/> <br>
                             <label for="exampleInputPassword1">Img URL</label>
-                            <input type="password" class="form-control" id="exampleInputPassword1" placeholder="Password">
+                            <input type="text" class="form-control" id="exampleInputPassword1" placeholder="Password" ng-model="image">
                         </div>
                         <div class="checkbox">
                             <label>
@@ -124,7 +125,6 @@ $conn->close();
   <script src="angular.min.js"></script>
     <script>
         var muutuja = <?=json_encode($book)?>;
-        console.log(muutuja);
     </script>
 <script src="test.js"></script>
 </body>

@@ -13,12 +13,12 @@
                         </div>
                     </div>
                     <div class="caption">
-                        <img ng-src="{{book.imageURL}}" class="img-circle">
-                        <h2>{{book.title}}</h2>
-                        <h3><small>{{book.author}}</small></h3>
-                        <p>{{book.ISBN}}</p>
-                        <p>{{book.description}}</p>
-                        <p><a href="#" class="btn btn-success" role="button">Edit</a> <a href="#" class="btn btn-danger" role="button">Delete</a></p>
+                        <div class="book-info"><img ng-src="img/{{book.image}}" class="img-circle"></div>
+                        <div class="book-info"><h2>{{book.title}}</h2></div>
+                        <div class="book-info"><h3><small>{{book.author}}</small></h3></div>
+                        <div class="book-info"><p>{{book.ISBN}}</p></div>
+                        <div class="book-info"><p>{{book.description}}</p></div>
+                        <div class="book-info"><p><a href="#" class="btn btn-success" role="button">Edit</a> <a href="#" class="btn btn-danger" role="button">Delete</a></p></div>
                     </div>
                 </div>
             </div>

@@ -62,6 +62,14 @@ img.small-icon {
     -moz-column-count: 1 !important;
     column-count: 1 !important;
 }
+
+.listView .caption {
+    display: flex;
+    justify-content: space-around;
+}
+.listView .book-info {
+    vertical-align: middle;
+}
 .book-panel {
     -webkit-column-break-inside: avoid;
     -moz-column-break-inside: avoid;
