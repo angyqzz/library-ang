@@ -12,14 +12,19 @@
                             <h4 class="media-heading" style=" margin-top: 6px;">{{book.group}}</h4>
                         </div>
                     </div>
-                    <div class="caption">
+
+                    <div class="caption" ng-controller="FormController">
+                        <form ng-submit="processForm()"">
+                        <input type="hidden" ng-model="formData.ID" ng-init="formData.ID=book.ISBN"/>
                         <div class="book-info"><img ng-src="img/{{book.image}}" class="img-circle"></div>
                         <div class="book-info"><h2>{{book.title}}</h2></div>
                         <div class="book-info"><h3><small>{{book.author}}</small></h3></div>
                         <div class="book-info"><p>{{book.ISBN}}</p></div>
                         <div class="book-info"><p>{{book.description}}</p></div>
-                        <div class="book-info"><p><a href="#" class="btn btn-success" role="button">Edit</a> <a href="#" class="btn btn-danger" role="button">Delete</a></p></div>
+                        <div class="book-info"><p><a href="#" class="btn btn-success" role="button">Edit</a> <button class="btn btn-danger" type="submit">Delete</button></p></div>
+                        </form>
                     </div>
+
                 </div>
             </div>
         </div>

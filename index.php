@@ -22,6 +22,20 @@ if ($result->num_rows > 0) {
     echo "0 results";
 }
 
+$sql1 = "SELECT `Name`, `ID`, `imageURL` FROM `groups` WHERE 1";
+$result1 = $conn->query($sql1);
+
+$group = array();
+
+if ($result1->num_rows > 0) {
+    // output data of each row
+    while($row = $result1->fetch_assoc()) {
+        array_push($group, $row);
+    }
+} else {
+    echo "0 results";
+}
+
 $conn->close();
 ?>
 
@@ -57,13 +71,17 @@ $conn->close();
         </div>
         <nav>
             <ul class="pagination" ng-init="tab=0">
-                <li ng-class="{ active:tab===0 }"><a href ng-click="tab = 0">All</a></li>
+                <!--<li ng-class="{ active:tab===0 }"><a href ng-click="tab = 0">{{gr.Name}}</a></li>
                 <li ng-class="{ active:tab===1 }"><a href ng-click="tab = 1">Comics</a></li>
                 <li ng-class="{ active:tab===2 }"><a href ng-click="tab = 2">Action</a></li>
-                <li ng-class="{ active:tab===3 }"><a href ng-click="tab = 3">Drama</a></li>
+                <li ng-class="{ active:tab===3 }"><a href ng-click="tab = 3">Drama</a></li>-->
             </ul>
         </nav>
-
+        <div ng-controller = "GroupsController as gopa" class="alert-danger">
+            <ul class="pagination" ng-init="tab=0">
+                <li ng-repeat = "value in gopa.grupp"><span ng-class="{ active:tab===value.ID }"><a href ng-click="{{value.ID}}">{{value.Name}}</a></span></li>
+            </ul>
+        </div>
         <div class="book-view">
             <span class="badge" ng-click="view='grid'"><i class="fa fa-th"></i></span><span class="badge" ng-click="view='list'"><i class="fa fa-th-list"></i></span>
         </div>
@@ -124,7 +142,9 @@ $conn->close();
     <script src="http://maxcdn.bootstrapcdn.com/bootstrap/3.3.1/js/bootstrap.min.js"></script>
   <script src="angular.min.js"></script>
     <script>
+        var gruppid = <?=json_encode($group)?>;
         var muutuja = <?=json_encode($book)?>;
+
     </script>
 <script src="test.js"></script>
 </body>
